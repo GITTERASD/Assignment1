@@ -15,7 +15,7 @@ let globalEditor = null;
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
-hello world
+
 export function SetupButtons() {
     
     document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
