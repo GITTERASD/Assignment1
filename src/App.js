@@ -16,6 +16,7 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
+// we've got buttons here for me to click.process,proc,play and stop
 export function SetupButtons() {
     
     document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
