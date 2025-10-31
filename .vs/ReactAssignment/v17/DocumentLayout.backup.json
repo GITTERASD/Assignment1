@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\index.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "index.js",
+              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\index.js",
+              "RelativeDocumentMoniker": "src\\index.js",
+              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\index.js",
+              "RelativeToolTip": "src\\index.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-27T05:36:11.197Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.js",
+              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\App.js",
+              "RelativeDocumentMoniker": "src\\App.js",
+              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\App.js",
+              "RelativeToolTip": "src\\App.js",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-27T05:23:12.775Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
