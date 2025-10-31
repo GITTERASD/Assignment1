@@ -1,5 +1,5 @@
 
-function PlayProButtons() {
+function PlayProButtons({onStop, onPlay }) {
     return (<>
         <div className="btn-group" role="group" aria-label="Basic mixed styles example">
       <button id="process" className="btn btn-outline-primary">Preprocess</button>
