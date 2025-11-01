@@ -70,6 +70,21 @@ export default function StrudelDemo() {
     //commented out all the javascript for some features and now doing the react way. Here is the react logic of doing play and stop.
     //than pass to the bottom
     const hasRun = useRef(false);
+    const preprocess = t => t.replaceAll('<p1_Radio>', '_');
+
+    const handleProcess = () => {
+        const p = preprocess(songText);
+        setSongText(p);
+        globalEditor.setCode(p);
+    };
+
+    const handleProcPlay = () => {
+        const p = preprocess(songText);
+        setSongText(p);
+        globalEditor.setCode(p);
+        globalEditor.evaluate();
+    };
+
     const handlePlay = () => {
         globalEditor.evaluate()
     }
@@ -77,6 +92,8 @@ export default function StrudelDemo() {
     const handleStop = () => {
         globalEditor.stop()
     }
+
+
 
     const [songText, setSongText] = useState(stranger_tune)
     
@@ -137,7 +154,7 @@ return (
                     </div>
                     <div className="col-md-4">
                         <nav>
-                            <PlayProButtons/>
+                            <PlayProButtons onProcess={handleProcess} onProcPlay={handleProcPlay} />
                             <br />
                             {/*than pass to jsx of Play*/}
                             <PlayButtons onPlay={handlePlay} onStop={handleStop} />
