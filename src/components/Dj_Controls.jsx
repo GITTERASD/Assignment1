@@ -26,31 +26,6 @@ export default function DjControls({
 
 return (
     <>
-   
-        <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="s1" checked={!!settings.s1}
-                onChange={(e) => update({ s1: e.target.checked })} />
-            <label className="form-check-label" htmlFor="s1">
-                s1
-            </label>
-        </div>
-
-        <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="d1"
-                checked={!!settings.d1}
-                onChange={(e) => update({ d1: e.target.checked })} />
-            <label className="form-check-label" htmlFor="d1">d1</label>
-        </div>
-
-        <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="d2"
-                checked={!!settings.d2}
-                onChange={(e) => update({ d2: e.target.checked })} />
-            <label className="form-check-label" htmlFor="d2">d2</label>
-        </div>
-  
-
-
         {/* BPM */}
         <div className="mb-3">
             <label htmlFor="bpm" className="form-label">BPM</label>
@@ -69,29 +44,8 @@ return (
                 onChange={(e) => update({ volume: Number(e.target.value) })} />
         </div>
 
-        {/* Backing Vocal Group */}
-        <div className="mb-3">
-            <label htmlFor="backingType" className="form-label">Backing Vocal Group</label>
-            <select id="backingType" className="form-select"
-                value={settings.backingType}
-                onChange={(e) => update({ backingType: e.target.value })}>
-                <option value="none">None</option>
-                <option value="boys">Boys</option>
-                <option value="girls">Girls</option>
-                <option value="children">Children</option>
-                <option value="mixed">Mixed (Boys + Girls)</option>
-            </select>
-        </div>
 
-        {/* Backing Volume */}
-        <div className="mb-3">
-            <label htmlFor="backingVol" className="form-label">Backing Volume: {settings.backingVol.toFixed(2)}</label>
-            <input id="backingVol" type="range" className="form-range"
-                min="0" max="1" step="0.01"
-                value={settings.backingVol}
-                onChange={(e) => update({ backingVol: Number(e.target.value) })} />
-        </div>
-
+       
         {/* Pitch sliders */}
         <div className="mb-3">
             <label className="form-label">Boy Pitch (semitones): {settings.boyPitch}</label>

@@ -12,30 +12,16 @@ import ProcessTextArea from './ProcessTextArea';
 import PlayButtons from './PlayButtons';
 import PlayProButtons from './PlayProButtons';
 
-const semitoneToSpeed = (st) => Number(Math.pow(2, st / 12).toFixed(4));
 
 
 function preprocess(text, s) {
     // 1) force BPM at the very top
-    let out = `setcps(${s.bpm}/60)\n` + text;
+    let out = `setcps(${s.bpm})\n` + text;
 
-    // 2) optional backing vocals block
-    const rows = [];
-    const boy = `.sound("supersaw").speed(${semitoneToSpeed(s.boyPitch)}).gain(${s.backingVol})`;
-    const girl = `.sound("supersaw").speed(${semitoneToSpeed(s.girlPitch)}).gain(${s.backingVol})`;
-    if (s.backingType === 'boys') rows.push(`s("~ [c5]*2 ~ [g4]*2")${boy}`);
-    if (s.backingType === 'girls') rows.push(`s("[e5]*2 ~ [b4]*2 ~")${girl}`);
-    if (s.backingType === 'children') rows.push(`s("[c6 e6 g6]*4")${girl}`);
-    if (s.backingType === 'mixed') {
-        rows.push(`s("~ [c5]*2 ~ [g4]*2")${boy}`);
-        rows.push(`s("[e5]*2 ~ [b4]*2 ~")${girl}`);
-    }
-    const backing = rows.length ? `\nbackvox:\nstack(\n  ${rows.join(',\n  ')}\n)\n` : '';
 
-    // 3) global master gain
     const master = `\nall(x => x.gain(${s.volume}))\n`;
 
-    out = out + backing + master;
+    out = out + + master;
     return out;
 }
 
