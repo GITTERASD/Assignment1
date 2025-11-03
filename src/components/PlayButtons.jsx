@@ -1,13 +1,8 @@
-
-function PlayButtons({onPlay,onStop }) {
+export default function PlayButtons({ onPlay, onStop }) {
     return (
         <>
-            <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button id="play" className="btn btn-outline-primary" onClick={onPlay}>Play</button>
-                <button id="stop" className="btn btn-outline-danger" onClick={onStop}>Stop</button>
-            </div>
+            <button className="btn btn-accent" onClick={onPlay}>Play</button>
+            <button className="btn btn-danger-ghost" onClick={onStop}>Stop</button>
         </>
     );
 }
-
-export default PlayButtons

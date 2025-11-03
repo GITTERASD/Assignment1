@@ -26,7 +26,7 @@ export default function DjControls({
 
 return (
     <>
-        {/* Checkboxes (s1, d1, d2) */}
+   
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="s1" checked={!!settings.s1}
                 onChange={(e) => update({ s1: e.target.checked })} />
@@ -108,19 +108,16 @@ return (
                 onChange={(e) => update({ girlPitch: Number(e.target.value) })} />
         </div>
 
-        {/* JSON actions */}
-        <div className="d-flex gap-2 flex-wrap">
-            <button className="btn btn-outline-secondary" onClick={onSave}>Save</button>
-            <button className="btn btn-outline-secondary" onClick={onLoad}>Load</button>
-            <button className="btn btn-outline-secondary" onClick={onExport}>Export</button>
+
+  
             <label className="btn btn-outline-secondary m-0">
                 Import <input type="file" accept="application/json" hidden onChange={handleImport} />
+
             </label>
-        </div>
+        {/*</div>*/}
     </>
 );
 }
-
 
 
 

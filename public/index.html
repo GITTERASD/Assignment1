@@ -16,62 +16,79 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
-    <!-- Simple theming hook -->
     <style>
         :root {
-            --bg: #0f1020;
-            --card: #17182d;
-            --ink: #e9ecff;
-            --ink-dim: #a6add3;
-            --accent: #6366f1;
-            --accent-2: #22d3ee;
+            --bg: #0b0f0c; /* black background */
+            --card: #0f1312; /* dark card */
+            --ink: #e8f5e9; 
+            --ink-dim: #9ad1b2; 
+            --accent: #00e676; 
+            --accent-2: #1de9b6; 
+            --border: rgba(255,255,255,.06);
+        }
+
+        html, body {
+            height: 100%
         }
 
         body {
             margin: 0;
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
             background: var(--bg);
             color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
         }
 
         .bg-surface {
-            background-image: url('/ui/hero-bg.svg');
-            background-size: cover;
-            background-attachment: fixed;
+            min-height: 100vh
+        }
+
+        .container {
+            max-width: 1200px
         }
 
         .card {
             background: var(--card);
-            border: 1px solid rgba(255,255,255,.06);
+            border: 1px solid var(--border);
+            border-radius: 16px
         }
 
-        .bg-gradient-primary {
-            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        .card-header {
+            background: linear-gradient(90deg,var(--accent),var(--accent-2));
+            color: #000;
+            font-weight: 700
         }
 
-        .text-white {
-            color: #fff !important;
+        .btn {
+            border-radius: 12px
         }
 
-        .rounded-4 {
-            border-radius: 1rem;
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent)
+        }
+
+        .btn-outline-secondary {
+            color: var(--ink);
+            border-color: var(--border)
+        }
+
+        a, .link {
+            color: var(--accent)
         }
 
         header img {
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,.35));
+            height: 36px;
+            vertical-align: middle
         }
-
-        code, pre, textarea {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        }
-
-        .container {
-            max-width: 1200px;
-        }
+   
+            header img:not([src]), header img[src=""], header img[onerror] {
+                display: none
+            }
     </style>
 
-    <!-- OpenGraph (optional) -->
-    <meta property="og:title" content="BeatLab · Strudel" />
+ 
+
+    <meta property="og:title" content="BeatLab  Strudel" />
     <meta property="og:description" content="A sleek React front-end and preprocessor UI for Strudel.cc live-coding." />
     <meta property="og:image" content="%PUBLIC_URL%/ui/og-image.png" />
     <meta property="og:type" content="website" />
