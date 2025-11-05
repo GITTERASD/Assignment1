@@ -3,11 +3,8 @@ import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
 import { transpiler } from '@strudel/transpiler';
-import {
-    initAudioOnFirstClick, getAudioContext, webaudioOutput, registerSynthSounds
-} from '@strudel/webaudio';
+import { initAudioOnFirstClick, getAudioContext, webaudioOutput, registerSynthSounds} from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-
 import ProcessTextArea from './ProcessTextArea';
 import PlayButtons from './PlayButtons';
 import PlayProButtons from './PlayProButtons';
@@ -21,7 +18,7 @@ function preprocess(text, s) {
 
     const master = `\nall(x => x.gain(${s.volume}))\n`;
 
-    out = out + + master;
+    out += master;
     return out;
 }
 
