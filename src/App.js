@@ -4,7 +4,8 @@ import { Routes, Route, Link, useSearchParams } from 'react-router-dom';
 import Home from './components/Home';
 import Settings from './components/Setting';
 import { stranger_tune } from './tunes';
-const STORAGE_KEY = 'beatlab-settings-v1';
+const STORAGE_KEY = 'beatlab-settings-v1'; //local storage that remembers previous settings
+
 const defaultSettings = {
     bpm: 120,
     volume: 0.8,
@@ -16,9 +17,9 @@ export default function App() {
     const [params, setParams] = useSearchParams();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [songText, setSongText] = useState(stranger_tune);
+    const [songText, setSongText] = useState(stranger_tune); //run the strangertune
     const [settings, setSettings] = useState(() => {
-        try {
+        try { // used by home to pro&play and by settings to change slider,save/load json
             const raw = localStorage.getItem(STORAGE_KEY);
             return raw ? { ...defaultSettings, ...JSON.parse(raw) } : defaultSettings;
         } catch {
@@ -59,6 +60,8 @@ export default function App() {
         const p = preprocess(songText, settings);
         setSongText(p);
 
+        
+
         window.globalEditor?.setCode?.(p);
     };
 
@@ -94,8 +97,13 @@ export default function App() {
     return (
         <div className="min-h-screen bg-surface">
             <header className="container py-4 d-flex align-items-center gap-3">
+
                 <img
-                    src="/ui/logo-mark.svg"
+                    src=""
+
+                <img //no image yer
+                    src=""
+
                     alt="BeatLab"
                     height={36}
                     onError={(e) => {
@@ -110,6 +118,8 @@ export default function App() {
             </header>
 
             <Routes>
+            {/*this is navigate to home*/}
+
                 <Route path="/" element={<Home controller={controller} />} />
             </Routes>
 
