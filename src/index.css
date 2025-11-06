@@ -282,3 +282,14 @@ input::placeholder {
     box-shadow: 0 12px 60px rgba(0,0,0,.55), 0 0 40px rgba(0,255,136,.10);
     padding: 18px 20px;
 }
+
+.modal-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    background: rgba(0,0,0,.35);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 1rem;
+}

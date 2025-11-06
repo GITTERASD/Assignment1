@@ -1,4 +1,5 @@
 
+import { Link } from "react-router-dom";
 export default function Settings({ controller, onClose }) {
     const { settings, setSettings, saveSettings, loadSettings, exportSettings, importSettings } = controller;
     const update = (patch) => setSettings(s => ({ ...s, ...patch }));
@@ -11,9 +12,9 @@ export default function Settings({ controller, onClose }) {
             <div className="row justify-content-center">
                 <div className="col-lg-8">
                     <div className="card rounded-4 shadow-lg">
-                        <div className="card-header d-flex align-items-center">
+                        <div className="card-header bg-gradient-primary d-flex align-items-center">
                             <h2 className="m-0">Settings</h2>
-                            <button className="btn btn-outline-secondary ms-auto" onClick={onClose}>Close</button>
+                            <Link className="btn btn-accent ms-auto" to="?" onClick={(e) => { e.preventDefault(); onClose(); }}>Close</Link>
                         </div>
 
                         <div className="card-body">

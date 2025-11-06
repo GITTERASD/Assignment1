@@ -1,11 +1,9 @@
 import './App.css';
 import { useState } from 'react';
-import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-
+import { Routes, Route, Link, useSearchParams } from 'react-router-dom';
 import Home from './components/Home';
 import Settings from './components/Setting';
 import { stranger_tune } from './tunes';
-
 const STORAGE_KEY = 'beatlab-settings-v1';
 const defaultSettings = {
     bpm: 120,
@@ -13,9 +11,11 @@ const defaultSettings = {
     pitchSemitones: 0,
 };
 
-const semitoneToSpeed = (st) => Number(Math.pow(2, st / 12).toFixed(4));
 
 export default function App() {
+    const [params, setParams] = useSearchParams();
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
     const [songText, setSongText] = useState(stranger_tune);
     const [settings, setSettings] = useState(() => {
         try {
@@ -26,7 +26,7 @@ export default function App() {
         }
     });
 
-    const navigate = useNavigate();
+
 
     // JSON helpers
     const saveSettings = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
@@ -49,17 +49,16 @@ export default function App() {
 
     const preprocess = (t, s) => {
         let out = t;
-        // simple token replacements
+     
         out = out.replaceAll('<BPM>', String(s.bpm));
         out = out.replaceAll('<VOL>', String(s.volume));
         return out; // <-- add return
-    }; // <-- close preprocess
+    }; 
 
-    // ---------- Transport handlers ----------
     const handleProcess = () => {
         const p = preprocess(songText, settings);
         setSongText(p);
-        // Strudel editor instance should be exposed in Home as: window.globalEditor = editor
+
         window.globalEditor?.setCode?.(p);
     };
 
@@ -68,8 +67,8 @@ export default function App() {
         window.globalEditor?.evaluate?.();
     };
 
-    const handlePlay = () => window.globalEditor?.evaluate?.();
-    const handleStop = () => window.globalEditor?.stop?.();
+    const handlePlay = () => { window.globalEditor?.evaluate?.(); setIsPlaying(true); };
+    const handleStop = () => { window.globalEditor?.stop?.(); setIsPlaying(false); };
 
     const controller = {
         songText,
@@ -85,6 +84,11 @@ export default function App() {
         handleProcPlay,
         handlePlay,
         handleStop,
+        isSettingsOpen,
+        setIsSettingsOpen,
+        isPlaying,
+        setIsPlaying,
+   
     };
 
     return (
@@ -100,19 +104,23 @@ export default function App() {
                 />
                 <h1 className="m-0 fw-bold">BeatLab Strudel</h1>
                 <div className="ms-auto">
-                    <Link className="btn btn-primary" to="/settings">
-                        Settings
-                    </Link>
+                    <Link className="btn btn-primary" to="?settings=open">Settings</Link>
                 </div>
             </header>
 
             <Routes>
                 <Route path="/" element={<Home controller={controller} />} />
-                <Route
-                    path="/settings"
-                    element={<Settings controller={controller} onClose={() => navigate(-1)} />}
-                />
             </Routes>
+
+                  {params.get('settings') === 'open' && (
+                        <div className="overlay">
+                              <div className="overlay-card">
+                                    <Settings controller={controller}
+                                      onClose={() => setParams({}, { replace: true })}/>
+                                  </div>
+                            </div>
+                      )}
+
         </div>
     );
 } 

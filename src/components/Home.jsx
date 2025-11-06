@@ -10,20 +10,27 @@ import PlayButtons from './PlayButtons';
 import PlayProButtons from './PlayProButtons';
 
 
-
 function preprocess(text, s) {
     // 1) force BPM at the very top
-    let out = `setcps(${s.bpm})\n` + text;
+    let out = `setcps(${s.bpm}/60/4)\n` + text;
+    //const rate = Number(Math.pow(2, (s.pitchSemitones || 0) / 12).toFixed(4));
+    const raw = s.pitchSemitones ?? 0;
+    const semis = Math.round(Math.sign(raw) * Math.pow(Math.abs(raw) / 5, 1.25) * 12);
+    const rate = Number((2 ** (semis / 12)).toFixed(4));
 
+    const master = `
+all(x => x.gain(${s.volume}))
+all(x => x.speed(${rate}))
+`;
+    //const master = `\nall(x => x.gain(${s.volume}))\nall(x => x.speed(${rate}))\n`;
 
-    const master = `\nall(x => x.gain(${s.volume}))\n`;
 
     out += master;
     return out;
 }
 
 export default function Home({ controller }) {
-    const { songText, setSongText, settings } = controller;
+    const { songText, setSongText, settings, isPlaying} = controller;
 
     const editorHostRef = useRef(null);
     const rollRef = useRef(null);
@@ -35,10 +42,11 @@ export default function Home({ controller }) {
         editorRef.current.setCode(code);
         if (evaluate) editorRef.current.evaluate();
     };
-    const handlePlay = () => editorRef.current?.evaluate();
-    const handleStop = () => editorRef.current?.stop();
+     const handlePlay = controller.handlePlay;
+     const handleStop = controller.handleStop;
     const handleProcess = () => apply(false);
     const handleProcPlay = () => apply(true);
+
 
  
     useEffect(() => {
@@ -63,7 +71,7 @@ export default function Home({ controller }) {
         window.addEventListener('resize', sizeCanvas);
 
         const drawTime = [-2, 2];
-        const editor = new StrudelMirror({
+        const globalEditor = new StrudelMirror({
             defaultOutput: webaudioOutput,
             getTime: () => getAudioContext().currentTime,
             transpiler,
@@ -99,7 +107,8 @@ export default function Home({ controller }) {
                 await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
             },
         });
-        editorRef.current = editor;
+        editorRef.current = globalEditor;
+        window.globalEditor = globalEditor;
 
         // show initial code
         apply(false);
@@ -109,15 +118,14 @@ export default function Home({ controller }) {
             editorRef.current?.stop();
             editorRef.current = null;
         };
+        globalEditor.setCode(songText);
         
-    }, []); // mount once
+    }, [songText]); // mount once
 
 
-    useEffect(() => {
-        const id = setTimeout(() => apply(false), 150);
-        return () => clearTimeout(id);
-   
-    }, [settings]);
+useEffect(() => {
+  apply(isPlaying);
+}, [settings, isPlaying]);
 
     return (
         <main className="container pb-5">
