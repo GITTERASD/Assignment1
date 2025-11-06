@@ -104,6 +104,7 @@ export default function App() {
                 />
                 <h1 className="m-0 fw-bold">BeatLab Strudel</h1>
                 <div className="ms-auto">
+                    {/*useSearchParams manage the ?settings=open*/}
                     <Link className="btn btn-primary" to="?settings=open">Settings</Link>
                 </div>
             </header>
