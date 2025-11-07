@@ -58,6 +58,7 @@ export default function Settings({ controller, onClose }) {
                             </div>
 
                             <div className="d-flex gap-2 mt-4">
+                            {/*onclickbutton that saves loads and exports*/}
                                 <button className="btn btn-outline-light" onClick={saveSettings}>Save</button>
                                 <button className="btn btn-outline-light" onClick={loadSettings}>Load</button>
                                 <button className="btn btn-outline-light" onClick={exportSettings}>Export</button>

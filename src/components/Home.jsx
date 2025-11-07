@@ -10,23 +10,24 @@ import PlayButtons from './PlayButtons';
 import PlayProButtons from './PlayProButtons';
 
 
-function preprocess(text, s) {
+function preprocess(text, song) {
     // 1) force BPM at the very top
-    let out = `setcps(${s.bpm}/60/4)\n` + text;
+    let out = `setcps(${song.bpm}/60/4)\n` + text;
     //const rate = Number(Math.pow(2, (s.pitchSemitones || 0) / 12).toFixed(4));
-    const raw = s.pitchSemitones ?? 0;
-    const semis = Math.round(Math.sign(raw) * Math.pow(Math.abs(raw) / 5, 1.25) * 12);
+    const raw = song.pitchSemitones ?? 0; // use the pitchSemitones if not working than use 0
+    const semis = Math.round(Math.sign(raw) * Math.pow(Math.abs(raw) / 5, 1.25) * 12); //formula to create pitch
     const rate = Number((2 ** (semis / 12)).toFixed(4));
 
+    //build two strudel command that runs everyround
     const master = `
-all(x => x.gain(${s.volume}))
-all(x => x.speed(${rate}))
+all(x => x.gain(${song.volume}))
+all(x => x.speed(${rate})) 
 `;
     //const master = `\nall(x => x.gain(${s.volume}))\nall(x => x.speed(${rate}))\n`;
 
 
     out += master;
-    return out;
+    return out; // returns the output of repl
 }
 
 export default function Home({ controller }) {
