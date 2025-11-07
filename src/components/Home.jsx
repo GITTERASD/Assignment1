@@ -31,7 +31,7 @@ all(x => x.speed(${rate}))
 }
 
 export default function Home({ controller }) {
-    const { songText, setSongText, settings, isPlaying} = controller;
+    const { songText, setSongText, settings, isPlaying} = controller; //read from app.js controller
 
     const editorHostRef = useRef(null);
     const rollRef = useRef(null);
