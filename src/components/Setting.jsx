@@ -1,6 +1,13 @@
-
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom"; //link to close the overlay
+import SettingsAlert from "./SettingsAlert";
+import BpmControl from "./BpmControl";
+import VolumeControl from "./VolumeControl";
+import PitchControl from "./PitchControl";
+import StorageButtons from "./StorageButtons";
+
+
+
 
 //patch is the newly updated piece of data
 export default function Settings({ controller, onClose }) {
@@ -97,79 +104,46 @@ export default function Settings({ controller, onClose }) {
                         </div>
 
                         <div className="card-body">
-                            {message && (
-                                <div
-                                    className={`alert alert-${message.type} mb-3`}
-                                    role="alert"
-                                >
-                                    {message.text}
-                                </div>
-                            )}
-                        {/*bpm*/}
-                            <label className="form-label">BPM</label>
-                            <input
-                                className="form-control"
-                                type="number" min="40" max="220"
-                                value={settings.bpm}
-                                //updates
-                                onChange={(e) => update({ bpm: Number(e.target.value) || 120 })}
+                            {/* Bootstrap alert */}
+                            <SettingsAlert message={message} />
+
+                            {/* BPM control */}
+                            <BpmControl
+                                bpm={settings.bpm}
+                                onChange={(value) =>
+                                    update({ bpm: value })
+                                }
                             />
 
-                            <div className="mt-3">
-                                <label className="form-label">Master Volume: {settings.volume.toFixed(2)}</label>
-                                <input
-                                    className="form-range"
-                                    type="range" min="0" max="1" step="0.01"
-                                    value={settings.volume}
-                                    onChange={(e) => update({ volume: Number(e.target.value) })}
-                                />
-                            </div>
+                            {/* Volume slider */}
+                            <VolumeControl
+                                volume={settings.volume}
+                                onChange={(value) =>
+                                    update({ volume: value })
+                                }
+                            />
 
-                  
+                            {/* Pitch slider + presets */}
+                            <PitchControl
+                                pitch={settings.pitchSemitones}
+                                onChangePitch={(value) =>
+                                    update({
+                                        pitchSemitones: value,
+                                    })
+                                }
+                                onBoyPreset={setBoyPreset}
+                                onGirlPreset={setGirlPreset}
+                            />
 
-                            <div className="mt-3 d-flex align-items-center gap-3 flex-wrap">
-                                <div className="flex-grow-1">
-                                    <label className="form-label">
-                                        Pitch (semitones): {settings.pitchSemitones}
-                                    </label>
-                                    <input
-                                        className="form-range"
-                                        type="range" min="-12" max="12" step="1"
-                                        value={settings.pitchSemitones}
-                                        //target is the input and value is to get the value of the input so it updates on change
-                                        onChange={(e) => update({ pitchSemitones: Number(e.target.value) })}
-                                    />
-                                </div>
-                                <div className="d-flex gap-2">
-                                    <button className="btn settings-btn-boy" onClick={setBoyPreset}>Boy pitch</button>
-                                    <button className="btn settings-btn-girl" onClick={setGirlPreset}>Girl pitch</button>
-                                </div>
-                            </div>
-
-                            <div className="d-flex gap-2 mt-4 flex-wrap">
-                            {/*onclickbutton that saves loads and exports*/}
-                                <button className="btn settings-btn" onClick={handleSave}>Save</button>
-                                <button className="btn settings-btn" onClick={handleLoad}>Load</button>
-                                <button className="btn settings-btn" onClick={handleExport}>Export</button>
-
-                                
-                                <button
-                                    type="button"
-                                    className="settings-btn settings-btn-import"
-                                    onClick={handleImportClick}
-                                >
-                                    Import
-                                </button>
-
-                                {/* hidden file input for Import */}
-                                <input
-                                    ref={fileInputRef}
-                                    type="file"
-                                    accept="application/json"
-                                    className="d-none"
-                                    onChange={handleImportFile}
-                                />
-                            </div>
+                            {/* Save / Load / Export / Import buttons */}
+                            <StorageButtons
+                                onSave={handleSave}
+                                onLoad={handleLoad}
+                                onExport={handleExport}
+                                onImportClick={handleImportClick}
+                                fileInputRef={fileInputRef}
+                                onImportFile={handleImportFile}
+                            />
                         </div>
                     </div>
                 </div>

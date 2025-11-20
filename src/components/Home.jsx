@@ -148,7 +148,7 @@ useEffect(() => {
     return (
         <main className="container pb-5">
             <div className="row g-4">
-                <div className="col-lg-7">
+                <div className="col-12 col-lg-7 mb-4 mb-lg-0">
                     <div className="card shadow-lg rounded-4 overflow-hidden">
                         <div className="card-header bg-gradient-primary text-dark fw-semibold">Composer</div>
                         <div className="card-body">
@@ -163,8 +163,8 @@ useEffect(() => {
                     </div>
                 </div>
 
-                <div className="col-lg-5">
-                    <div className="card shadow-lg rounded-4 mb-5">
+                <div className="col-12 col-lg-5">
+                    <div className="card shadow-lg rounded-4">
                         <div className="card-header bg-gradient-primary text-dark fw-semibold">
                             Transport & Controls
                         </div>

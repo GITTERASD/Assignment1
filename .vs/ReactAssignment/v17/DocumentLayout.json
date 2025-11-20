@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\components\\playbuttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\playbuttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\components\\playprobuttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\playprobuttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\components\\setting.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\setting.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\components\\settingsalert.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\settingsalert.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\components\\pitchcontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\pitchcontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\components\\bpmcontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\bpmcontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\components\\storagebuttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\storagebuttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\admin\\onedrive\\strudel_reactor-main-main\\src\\components\\volumecontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\volumecontrol.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,63 +33,91 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 217,
-          "SelectedChildIndex": 2,
+          "DockedHeight": 193,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "App.js",
-              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\App.js",
-              "RelativeDocumentMoniker": "src\\App.js",
-              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\App.js",
-              "RelativeToolTip": "src\\App.js",
-              "ViewState": "AgIAAE8AAAAAAAAAAADgv0IAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-07T03:45:32.346Z"
+              "DocumentIndex": 4,
+              "Title": "StorageButtons.jsx",
+              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\StorageButtons.jsx",
+              "RelativeDocumentMoniker": "src\\components\\StorageButtons.jsx",
+              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\StorageButtons.jsx",
+              "RelativeToolTip": "src\\components\\StorageButtons.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-11-20T16:11:29.905Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Setting.jsx",
-              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\Setting.jsx",
-              "RelativeDocumentMoniker": "src\\components\\Setting.jsx",
-              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\Setting.jsx",
-              "RelativeToolTip": "src\\components\\Setting.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABaAAAAAAAAAA==",
+              "Title": "PitchControl.jsx",
+              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\PitchControl.jsx",
+              "RelativeDocumentMoniker": "src\\components\\PitchControl.jsx",
+              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\PitchControl.jsx",
+              "RelativeToolTip": "src\\components\\PitchControl.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-07T02:52:12.598Z"
+              "WhenOpened": "2025-11-20T16:10:56.802Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PlayButtons.jsx",
-              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\PlayButtons.jsx",
-              "RelativeDocumentMoniker": "src\\components\\PlayButtons.jsx",
-              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\PlayButtons.jsx",
-              "RelativeToolTip": "src\\components\\PlayButtons.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAGAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "VolumeControl.jsx",
+              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\VolumeControl.jsx",
+              "RelativeDocumentMoniker": "src\\components\\VolumeControl.jsx",
+              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\VolumeControl.jsx",
+              "RelativeToolTip": "src\\components\\VolumeControl.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-07T02:52:10.478Z",
+              "WhenOpened": "2025-11-20T16:10:18.301Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BpmControl.jsx",
+              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\BpmControl.jsx",
+              "RelativeDocumentMoniker": "src\\components\\BpmControl.jsx",
+              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\BpmControl.jsx",
+              "RelativeToolTip": "src\\components\\BpmControl.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAwAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-11-20T16:09:51.803Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PlayProButtons.jsx",
-              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\PlayProButtons.jsx",
-              "RelativeDocumentMoniker": "src\\components\\PlayProButtons.jsx",
-              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\PlayProButtons.jsx",
-              "RelativeToolTip": "src\\components\\PlayProButtons.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAA+wAAAAAAAAAAAAAAAAA==",
+              "Title": "SettingsAlert.jsx",
+              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\SettingsAlert.jsx",
+              "RelativeDocumentMoniker": "src\\components\\SettingsAlert.jsx",
+              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\SettingsAlert.jsx",
+              "RelativeToolTip": "src\\components\\SettingsAlert.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-07T02:52:09.063Z",
+              "WhenOpened": "2025-11-20T16:09:30.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Setting.jsx",
+              "DocumentMoniker": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\Setting.jsx",
+              "RelativeDocumentMoniker": "src\\components\\Setting.jsx",
+              "ToolTip": "C:\\Users\\admin\\OneDrive\\strudel_reactor-main-main\\src\\components\\Setting.jsx",
+              "RelativeToolTip": "src\\components\\Setting.jsx",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAswIwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-11-07T02:52:12.598Z",
               "EditorCaption": ""
             }
           ]
         },
         {
-          "DockedHeight": 183,
+          "DockedHeight": 207,
           "SelectedChildIndex": -1,
           "Children": [
             {
