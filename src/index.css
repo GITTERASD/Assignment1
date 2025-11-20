@@ -20,12 +20,12 @@ html, body, #root {
     color: var(--ink) !important;
 }
 
-
+/* base text colour */
 h1, h2, h3, h4, h5, h6, p, label, span, strong, em, small, code, pre {
     color: var(--ink) !important;
 }
 
-
+/* secondary text */
 .text-muted, .hint, .tip, .small, small {
     color: var(--muted) !important;
 }
@@ -39,7 +39,7 @@ a, .btn-link {
         color: var(--accent-2) !important;
     }
 
-
+/*  Form fields / inputs  */
 .form-control, .form-select, .input-dark, .select-dark, textarea, input[type="number"] {
     background: #0b0d0b !important;
     color: var(--ink) !important;
@@ -56,12 +56,13 @@ a, .btn-link {
         box-shadow: 0 0 0 .25rem rgba(0,255,136,.12) !important;
     }
 
-
+/* checkbox / radio accent */
 input[type="checkbox"], input[type="radio"] {
     accent-color: var(--accent);
 }
 
 
+/* Range sliders (volume / pitch)  */
 input[type="range"], input[type="range"].accent {
     -webkit-appearance: none;
     width: 100%;
@@ -278,6 +279,7 @@ input::placeholder {
     place-items: center;
 }
 
+/* card body spacing */
 .overlay-card {
     width: min(900px, 92vw);
     max-height: 88vh;
@@ -288,7 +290,7 @@ input::placeholder {
     box-shadow: 0 12px 60px rgba(0,0,0,.55), 0 0 40px rgba(0,255,136,.10);
     padding: 18px 20px;
 }
-
+/* old modal helper ¨C kept in case it's used elsewhere */
 .modal-layer {
     position: fixed;
     inset: 0;
@@ -328,10 +330,93 @@ input::placeholder {
 }
 
 .overlay-card .card-header {
-    color: #001309 !important; /* dark green/black */
+    color: #001309 !important; 
 }
 
-    /* everything inside the header (title + Close link/button) */
+
     .overlay-card .card-header * {
         color: #001309 !important;
     }
+
+/* Settings card fills the overlay panel nicely */
+.overlay-card {
+    padding: 0; /* remove extra black frame around the inner card */
+}
+
+.overlay-card {
+    width: min(900px, 92vw);
+    max-height: 88vh;
+    overflow: hidden;
+    background: transparent; /* no extra dark frame */
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 12px 60px rgba(0,0,0,.55), 0 0 40px rgba(0,255,136,.10);
+    padding: 0; /* remove inner padding */
+}
+
+    /* Actual settings card inside overlay */
+    .overlay-card .card {
+        width: 100%;
+        margin: 0;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+    }
+
+    /* Header & body */
+    .overlay-card .card-header {
+        border-radius: 20px 20px 0 0;
+        border-bottom: 1px solid rgba(0,255,136,.25);
+        color: #001309 !important; /* dark text on neon bar */
+    }
+
+        .overlay-card .card-header * {
+            color: #001309 !important;
+        }
+
+    .overlay-card .card-body {
+        padding: 1.8rem 2rem 2rem;
+    }
+
+/* Settings buttons (Save/Load/Export/Import/Boy/Girl) */
+.settings-btn {
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #0b0d0b;
+    color: var(--ink);
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+    .settings-btn:hover {
+        filter: brightness(1.08);
+    }
+
+
+.settings-btn-import {
+    border-color: var(--accent);
+    background: rgba(0,255,136,0.16);
+    color: var(--accent);
+}
+
+
+.settings-btn-boy {
+    border-radius: 999px;
+    border: 1px solid #00aaff;
+    background: rgba(0,170,255,0.16);
+    color: #00aaff;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.settings-btn-girl {
+    border-radius: 999px;
+    border: 1px solid #ff69b4;
+    background: rgba(255,105,180,0.16);
+    color: #ff69b4;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}

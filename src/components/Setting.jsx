@@ -59,19 +59,19 @@ export default function Settings({ controller, onClose }) {
                                     />
                                 </div>
                                 <div className="d-flex gap-2">
-                                    <button className="btn btn-outline-light" onClick={setBoyPreset}>Boy pitch</button>
-                                    <button className="btn btn-outline-light" onClick={setGirlPreset}>Girl pitch</button>
+                                    <button className="btn settings-btn-boy" onClick={setBoyPreset}>Boy pitch</button>
+                                    <button className="btn settings-btn-girl" onClick={setGirlPreset}>Girl pitch</button>
                                 </div>
                             </div>
 
-                            <div className="d-flex gap-2 mt-4">
+                            <div className="d-flex gap-2 mt-4 flex-wrap">
                             {/*onclickbutton that saves loads and exports*/}
-                                <button className="btn btn-outline-light" onClick={saveSettings}>Save</button>
-                                <button className="btn btn-outline-light" onClick={loadSettings}>Load</button>
-                                <button className="btn btn-outline-light" onClick={exportSettings}>Export</button>
+                                <button className="btn settings-btn" onClick={saveSettings}>Save</button>
+                                <button className="btn settings-btn" onClick={loadSettings}>Load</button>
+                                <button className="btn settings-btn" onClick={exportSettings}>Export</button>
 
                                 
-                                <label className="btn btn-outline-light m-0">
+                                <label className="btn settings-btn settings-btn-import m-0">
                                     Import
                                     {/*the file to import is restricted to the json file*/}
                                     <input
