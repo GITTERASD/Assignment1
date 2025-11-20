@@ -10,6 +10,7 @@ import PlayButtons from './PlayButtons';
 import PlayProButtons from './PlayProButtons';
 import beats from '../beats.json';
 import BeatSelector from './BeatSelector';
+import DeckInfo from './DeckInfo';
 
 function preprocess(text, song, comboBeat) {
     // 1) force BPM at the very top
@@ -40,6 +41,8 @@ export default function Home({ controller }) {
     const editorHostRef = useRef(null);
     const rollRef = useRef(null);
     const editorRef = useRef(null);   
+
+    const currentBeat = beats.find(b => b.id === selectedBeatId) || beats[0];
 
     //preprocess the song with the current setting
     const apply = (evaluate = false) => {
@@ -161,7 +164,7 @@ useEffect(() => {
                 </div>
 
                 <div className="col-lg-5">
-                    <div className="card shadow-lg rounded-4">
+                    <div className="card shadow-lg rounded-4 mb-5">
                         <div className="card-header bg-gradient-primary text-dark fw-semibold">
                             Transport & Controls
                         </div>
@@ -183,6 +186,13 @@ useEffect(() => {
                                 selectedId={selectedBeatId}
                                 onChange={setSelectedBeatId}
                             />
+                            <DeckInfo
+                                bpm={settings.bpm}
+                                volume={settings.volume}
+                                pitch={settings.pitchSemitones}
+                                mixName={currentBeat.name}
+                            />
+
                         </div>
                     </div>
 

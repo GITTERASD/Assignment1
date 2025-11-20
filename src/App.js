@@ -1,4 +1,4 @@
-import './App.css';
+﻿import './App.css';
 import { useState } from 'react';
 import { Routes, Route, Link, useSearchParams } from 'react-router-dom';
 import Home from './components/Home';
@@ -117,10 +117,18 @@ export default function App() {
                         e.currentTarget.style.display = 'none';
                     }}
                 />
-                <h1 className="m-0 fw-bold">BeatLab Strudel</h1>
+                <h1 className="m-0 brand-title">
+                    <span className="brand-main">BeatLab</span>
+                    <span className="brand-sub">Strudel</span>
+                </h1>
                 <div className="ms-auto">
                     {/*useSearchParams manage the ?settings=open*/}
-                    <Link className="btn btn-primary" to="?settings=open">Settings</Link>
+                    <Link className="btn icon-btn rounded-circle d-flex align-items-center justify-content-center"
+                        to="?settings=open"
+                        aria-label="Settings"
+                        style={{ width: 52, height: 52, fontSize: 28 }}>
+                        ⚙
+                    </Link>
                 </div>
             </header>
 

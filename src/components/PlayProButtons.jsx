@@ -1,8 +1,8 @@
-export default function PlayProButtons({ onProcess, onProcPlay }) {
+﻿export default function PlayProButtons({ onProcess, onProcPlay }) {
     return (
         <>
-            <button className="btn btn-ghost" onClick={onProcess}>Preprocess</button>
-            <button className="btn btn-ghost" onClick={onProcPlay}>Proc &amp; Play</button>
+            <button className="pad pad-preprocess" onClick={onProcess} aria-label="Preprocess">⟳</button>
+            <button className="pad pad-procplay" onClick={onProcPlay} aria-label="Process and Play">⟳▶</button>
         </>
     );
 }

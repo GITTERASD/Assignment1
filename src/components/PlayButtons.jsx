@@ -1,8 +1,9 @@
-export default function PlayButtons({ onPlay, onStop }) {
+﻿export default function PlayButtons({ onPlay, onStop }) {
     return (
         <>
-            <button className="btn btn-accent" onClick={onPlay}>Play</button>
-            <button className="btn btn-danger-ghost" onClick={onStop}>Stop</button>
+            <button className="pad pad-play" onClick={onPlay} aria-label="Play">▶</button>
+            <button className="pad pad-stop" onClick={onStop} aria-label="Stop"
+>■</button>
         </>
     );
 }
