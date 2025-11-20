@@ -1,14 +1,88 @@
 
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom"; //link to close the overlay
 
 //patch is the newly updated piece of data
 export default function Settings({ controller, onClose }) {
     const { settings, setSettings, saveSettings, loadSettings, exportSettings, importSettings } = controller; //from app
     const update = (patch) => setSettings(s => ({ ...s, ...patch })); // update() merges small changes (patches) into the settings object
+    // message shown in the Bootstrap alert
+    // { type: "success" | "danger" | "info", text: string }
+    const [message, setMessage] = useState(null);
 
+    // hidden file input for Import
+    const fileInputRef = useRef(null);
     //quickly apply - 4 or + 4 semitone pitch adjustments for pitch type
     const setBoyPreset = () => update({ pitchSemitones: -4, backingType: settings.backingType || "boys" }); 
     const setGirlPreset = () => update({ pitchSemitones: +4, backingType: settings.backingType || "girls" });
+
+
+    // --- button handlers that also set alert message ---
+
+    const handleSave = () => {
+        saveSettings();
+        setMessage({
+            type: "success",
+            text: "Settings saved in this browser.",
+        });
+    };
+
+    const handleLoad = () => {
+        loadSettings();
+        setMessage({
+            type: "info",
+            text: "Saved settings loaded.",
+        });
+    };
+
+    const handleExport = () => {
+        exportSettings();
+        setMessage({
+            type: "success",
+            text: "Settings file downloaded.",
+        });
+    };
+
+    const handleImportClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ""; // allow re-selecting same file
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleImportFile = (evt) => {
+        const file = evt.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            try {
+                const obj = JSON.parse(reader.result);
+                importSettings(obj);
+                setMessage({
+                    type: "success",
+                    text: "Settings imported successfully.",
+                });
+            } catch (err) {
+                console.error(err);
+                setMessage({
+                    type: "danger",
+                    text: "Import failed. Please choose a valid JSON settings file.",
+                });
+            }
+        };
+
+        reader.onerror = () => {
+            setMessage({
+                type: "danger",
+                text: "Could not read file. Please try again.",
+            });
+        };
+
+        reader.readAsText(file);
+    };
+
 
     return (
         <main className="container">
@@ -23,6 +97,14 @@ export default function Settings({ controller, onClose }) {
                         </div>
 
                         <div className="card-body">
+                            {message && (
+                                <div
+                                    className={`alert alert-${message.type} mb-3`}
+                                    role="alert"
+                                >
+                                    {message.text}
+                                </div>
+                            )}
                         {/*bpm*/}
                             <label className="form-label">BPM</label>
                             <input
@@ -66,34 +148,28 @@ export default function Settings({ controller, onClose }) {
 
                             <div className="d-flex gap-2 mt-4 flex-wrap">
                             {/*onclickbutton that saves loads and exports*/}
-                                <button className="btn settings-btn" onClick={saveSettings}>Save</button>
-                                <button className="btn settings-btn" onClick={loadSettings}>Load</button>
-                                <button className="btn settings-btn" onClick={exportSettings}>Export</button>
+                                <button className="btn settings-btn" onClick={handleSave}>Save</button>
+                                <button className="btn settings-btn" onClick={handleLoad}>Load</button>
+                                <button className="btn settings-btn" onClick={handleExport}>Export</button>
 
                                 
-                                <label className="btn settings-btn settings-btn-import m-0">
+                                <button
+                                    type="button"
+                                    className="settings-btn settings-btn-import"
+                                    onClick={handleImportClick}
+                                >
                                     Import
-                                    {/*the file to import is restricted to the json file*/}
-                                    <input
-                                        hidden
-                                        type="file"
-                                        accept="application/json"
-                                        // triggered when user selects file; safely target the first file or exit if none
-                                        onChange={(e) => {
-                                            const f = e.target.files?.[0];
-                                            if (!f) return;
-                                            const r = new FileReader();
-                                            r.onload = () => {
-                                                try { importSettings(JSON.parse(r.result)); }
-                                                catch { alert('Bad JSON'); }
-                                            };
-                                            r.readAsText(f);
-                                        }}
-                                    />
-                                </label>
-                            </div>
+                                </button>
 
-                  
+                                {/* hidden file input for Import */}
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="application/json"
+                                    className="d-none"
+                                    onChange={handleImportFile}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

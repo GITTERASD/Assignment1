@@ -169,7 +169,7 @@ useEffect(() => {
                             Transport & Controls
                         </div>
                         <div className="card-body">
-                            <nav className="mb-3 d-flex gap-2">
+                            <nav className="mb-3 d-flex flex-wrap align-items-start gap-4">
                                 <PlayProButtons onProcess={handleProcess} onProcPlay={handleProcPlay} />
                                 <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                             </nav>

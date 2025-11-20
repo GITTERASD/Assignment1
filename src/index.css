@@ -174,6 +174,25 @@ input[type="range"], input[type="range"].accent {
     width: 60px;
 }
 
+.pad-wrapper {
+    display: inline-flex; /* treated as one item inside the nav */
+    flex-direction: column; /* icon on top, text under */
+    align-items: center;
+    margin-right: 28px; /* space between each pad group */
+}
+
+/* label under each pad */
+.pad-label {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+
+
+
 .icon-btn {
     background: #111511;
     border: 1px solid var(--border);
@@ -420,3 +439,4 @@ input::placeholder {
     font-size: 0.85rem;
     font-weight: 600;
 }
+
