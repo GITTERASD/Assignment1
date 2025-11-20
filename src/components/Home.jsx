@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef,useState } from 'react';
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -8,9 +8,10 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import ProcessTextArea from './ProcessTextArea';
 import PlayButtons from './PlayButtons';
 import PlayProButtons from './PlayProButtons';
+import beats from '../beats.json';
+import BeatSelector from './BeatSelector';
 
-
-function preprocess(text, song) {
+function preprocess(text, song, comboBeat) {
     // 1) force BPM at the very top
     let out = `setcps(${song.bpm}/60/4)\n` + text;
     //const rate = Number(Math.pow(2, (s.pitchSemitones || 0) / 12).toFixed(4));
@@ -23,8 +24,10 @@ function preprocess(text, song) {
 all(x => x.gain(${song.volume}))
 all(x => x.speed(${rate})) 
 `;
-    //const master = `\nall(x => x.gain(${s.volume}))\nall(x => x.speed(${rate}))\n`;
 
+    if (comboBeat && comboBeat.trim().length > 0) {
+        out += `\n\n${comboBeat}\n`;
+    }
 
     out += master;
     return out; // returns the output of repl
@@ -32,15 +35,21 @@ all(x => x.speed(${rate}))
 
 export default function Home({ controller }) {
     const { songText, setSongText, settings, isPlaying} = controller; //read from app.js controller
-
+    //refs used to acces DOM elements
+    const [selectedBeatId, setSelectedBeatId] = useState('original');
     const editorHostRef = useRef(null);
     const rollRef = useRef(null);
     const editorRef = useRef(null);   
 
+    //preprocess the song with the current setting
     const apply = (evaluate = false) => {
         if (!editorRef.current) return;
-        const code = preprocess(songText, settings);
+        const selectedBeat = beats.find(b => b.id === selectedBeatId);
+        const comboBeat = selectedBeat?.code || "";
+        const code = preprocess(songText, settings, comboBeat);
+        //edit the repl with new code and 
         editorRef.current.setCode(code);
+        //if evaluate is true
         if (evaluate) editorRef.current.evaluate();
     };
      const handlePlay = controller.handlePlay;
@@ -53,16 +62,19 @@ export default function Home({ controller }) {
     useEffect(() => {
         const root = editorHostRef.current;
         const canvas = rollRef.current;
-        if (!root || !canvas) return;
+        if (!root || !canvas) return;// stop if either element is missing
+
 
         root.innerHTML = '';
 
         initAudioOnFirstClick();
 
+        //shapes th effect box
         const ctx = canvas.getContext('2d');
         const dpr = Math.max(1, window.devicePixelRatio || 1);
         const PIXEL_HEIGHT = 240;
         const sizeCanvas = () => {
+            // function that keeps the canvas size matching the window
             const rect = canvas.getBoundingClientRect();
             canvas.width = Math.max(1, Math.floor(rect.width * dpr));
             canvas.height = Math.max(1, Math.floor(PIXEL_HEIGHT * dpr));
@@ -81,6 +93,7 @@ export default function Home({ controller }) {
             onDraw: (haps, time) => {
                 const W = canvas.width / dpr, H = canvas.height / dpr;
                 ctx.clearRect(0, 0, W, H);
+                //shapes the notes to effect
                 drawPianoroll({ haps, time, ctx, drawTime, fold: 0 });
 
                 // extra "drum pulse" overlay so you see non-pitched hits
@@ -89,6 +102,7 @@ export default function Home({ controller }) {
                 for (const h of haps) {
                     const pitched = (h && (h.note != null || h.freq != null));
                     if (pitched) continue;
+                    // extra overlay for unpitched sounds (like drums)
                     const hs = Math.max(0, (h?.start ?? h?.s ?? time[0]) - time[0]) / span;
                     const he = Math.max(hs, (h?.end ?? h?.e ?? time[0]) - time[0]) / span;
                     const x = hs * W, w = Math.max(2, (he - hs) * W), y = H - (lane % 3 + 1) * 16;
@@ -126,14 +140,14 @@ export default function Home({ controller }) {
 
 useEffect(() => {
   apply(isPlaying);
-}, [settings, isPlaying]);
+}, [settings, isPlaying, selectedBeatId]);
 
     return (
         <main className="container pb-5">
             <div className="row g-4">
                 <div className="col-lg-7">
                     <div className="card shadow-lg rounded-4 overflow-hidden">
-                        <div className="card-header bg-gradient-primary text-white fw-semibold">Composer</div>
+                        <div className="card-header bg-gradient-primary text-dark fw-semibold">Composer</div>
                         <div className="card-body">
                             <ProcessTextArea
                                 defaultValue={songText}
@@ -148,7 +162,7 @@ useEffect(() => {
 
                 <div className="col-lg-5">
                     <div className="card shadow-lg rounded-4">
-                        <div className="card-header bg-gradient-primary text-white fw-semibold">
+                        <div className="card-header bg-gradient-primary text-dark fw-semibold">
                             Transport & Controls
                         </div>
                         <div className="card-body">
@@ -156,9 +170,22 @@ useEffect(() => {
                                 <PlayProButtons onProcess={handleProcess} onProcPlay={handleProcPlay} />
                                 <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                             </nav>
-            
                         </div>
                     </div>
+
+                    <div className="card shadow-lg rounded-4">
+                        <div className="card-header bg-gradient-primary text-dark fw-semibold">
+                            Instrument mix
+                        </div>
+                        <div className="card-body">
+                            <BeatSelector
+                                beats={beats}
+                                selectedId={selectedBeatId}
+                                onChange={setSelectedBeatId}
+                            />
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </main>

@@ -125,7 +125,7 @@ export default function App() {
             </header>
 
             <Routes>
-            {/*this is navigate to home and passes the controller*/}
+            this is navigate to home and passes the controller
                 <Route path="/" element={<Home controller={controller} />} />
             </Routes>
 

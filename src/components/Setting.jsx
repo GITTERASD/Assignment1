@@ -1,10 +1,13 @@
 
-import { Link } from "react-router-dom";
-export default function Settings({ controller, onClose }) {
-    const { settings, setSettings, saveSettings, loadSettings, exportSettings, importSettings } = controller;
-    const update = (patch) => setSettings(s => ({ ...s, ...patch }));
+import { Link } from "react-router-dom"; //link to close the overlay
 
-    const setBoyPreset = () => update({ pitchSemitones: -4, backingType: settings.backingType || "boys" });
+//patch is the newly updated piece of data
+export default function Settings({ controller, onClose }) {
+    const { settings, setSettings, saveSettings, loadSettings, exportSettings, importSettings } = controller; //from app
+    const update = (patch) => setSettings(s => ({ ...s, ...patch })); // update() merges small changes (patches) into the settings object
+
+    //quickly apply - 4 or + 4 semitone pitch adjustments for pitch type
+    const setBoyPreset = () => update({ pitchSemitones: -4, backingType: settings.backingType || "boys" }); 
     const setGirlPreset = () => update({ pitchSemitones: +4, backingType: settings.backingType || "girls" });
 
     return (
@@ -14,16 +17,19 @@ export default function Settings({ controller, onClose }) {
                     <div className="card rounded-4 shadow-lg">
                         <div className="card-header bg-gradient-primary d-flex align-items-center">
                             <h2 className="m-0">Settings</h2>
+                            {/*go back to home link that hides the overlay*/}
+                            {/*prevent going back to default*/}
                             <Link className="btn btn-accent ms-auto" to="?" onClick={(e) => { e.preventDefault(); onClose(); }}>Close</Link>
                         </div>
 
                         <div className="card-body">
-
+                        {/*bpm*/}
                             <label className="form-label">BPM</label>
                             <input
                                 className="form-control"
                                 type="number" min="40" max="220"
                                 value={settings.bpm}
+                                //updates
                                 onChange={(e) => update({ bpm: Number(e.target.value) || 120 })}
                             />
 
@@ -48,6 +54,7 @@ export default function Settings({ controller, onClose }) {
                                         className="form-range"
                                         type="range" min="-12" max="12" step="1"
                                         value={settings.pitchSemitones}
+                                        //target is the input and value is to get the value of the input so it updates on change
                                         onChange={(e) => update({ pitchSemitones: Number(e.target.value) })}
                                     />
                                 </div>
@@ -63,12 +70,15 @@ export default function Settings({ controller, onClose }) {
                                 <button className="btn btn-outline-light" onClick={loadSettings}>Load</button>
                                 <button className="btn btn-outline-light" onClick={exportSettings}>Export</button>
 
+                                
                                 <label className="btn btn-outline-light m-0">
                                     Import
+                                    {/*the file to import is restricted to the json file*/}
                                     <input
                                         hidden
                                         type="file"
                                         accept="application/json"
+                                        // triggered when user selects file; safely target the first file or exit if none
                                         onChange={(e) => {
                                             const f = e.target.files?.[0];
                                             if (!f) return;
