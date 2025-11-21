@@ -11,11 +11,12 @@ import PlayProButtons from './PlayProButtons';
 import beats from '../beats.json';
 import BeatSelector from './BeatSelector';
 import DeckInfo from './DeckInfo';
+import D3Graph from './D3Graph';
 
-function preprocess(text, song, comboBeat) {
+
+function buildPlaybackCode(text, song, comboBeat) {
     // 1) force BPM at the very top
     let out = `setcps(${song.bpm}/60/4)\n` + text;
-    //const rate = Number(Math.pow(2, (s.pitchSemitones || 0) / 12).toFixed(4));
     const raw = song.pitchSemitones ?? 0; // use the pitchSemitones if not working than use 0
     const semis = Math.round(Math.sign(raw) * Math.pow(Math.abs(raw) / 5, 1.25) * 12); //formula to create pitch
     const rate = Number((2 ** (semis / 12)).toFixed(4));
@@ -49,7 +50,7 @@ export default function Home({ controller }) {
         if (!editorRef.current) return;
         const selectedBeat = beats.find(b => b.id === selectedBeatId);
         const comboBeat = selectedBeat?.code || "";
-        const code = preprocess(songText, settings, comboBeat);
+        const code = buildPlaybackCode(songText, settings, comboBeat);
         //edit the repl with new code and 
         editorRef.current.setCode(code);
         //if evaluate is true
@@ -61,59 +62,37 @@ export default function Home({ controller }) {
     const handleProcPlay = () => apply(true);
 
 
- 
+
+
     useEffect(() => {
         const root = editorHostRef.current;
         const canvas = rollRef.current;
-        if (!root || !canvas) return;// stop if either element is missing
-
+        if (!root || !canvas) return;
 
         root.innerHTML = '';
 
+      
+        const drawContext = canvas.getContext('2d');
+        canvas.width = canvas.width * 2;
+        canvas.height = canvas.height * 2;
+        const drawTime = [-2, 2];
+
         initAudioOnFirstClick();
 
-        //shapes th effect box
-        const ctx = canvas.getContext('2d');
-        const dpr = Math.max(1, window.devicePixelRatio || 1);
-        const PIXEL_HEIGHT = 240;
-        const sizeCanvas = () => {
-            // function that keeps the canvas size matching the window
-            const rect = canvas.getBoundingClientRect();
-            canvas.width = Math.max(1, Math.floor(rect.width * dpr));
-            canvas.height = Math.max(1, Math.floor(PIXEL_HEIGHT * dpr));
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        };
-        sizeCanvas();
-        window.addEventListener('resize', sizeCanvas);
-
-        const drawTime = [-2, 2];
         const globalEditor = new StrudelMirror({
             defaultOutput: webaudioOutput,
             getTime: () => getAudioContext().currentTime,
             transpiler,
             root,
             drawTime,
-            onDraw: (haps, time) => {
-                const W = canvas.width / dpr, H = canvas.height / dpr;
-                ctx.clearRect(0, 0, W, H);
-                //shapes the notes to effect
-                drawPianoroll({ haps, time, ctx, drawTime, fold: 0 });
-
-                // extra "drum pulse" overlay so you see non-pitched hits
-                const span = (time[1] - time[0]) || 1;
-                let lane = 0;
-                for (const h of haps) {
-                    const pitched = (h && (h.note != null || h.freq != null));
-                    if (pitched) continue;
-                    // extra overlay for unpitched sounds (like drums)
-                    const hs = Math.max(0, (h?.start ?? h?.s ?? time[0]) - time[0]) / span;
-                    const he = Math.max(hs, (h?.end ?? h?.e ?? time[0]) - time[0]) / span;
-                    const x = hs * W, w = Math.max(2, (he - hs) * W), y = H - (lane % 3 + 1) * 16;
-                    lane++;
-                    ctx.fillStyle = 'rgba(176,133,255,.65)';
-                    ctx.fillRect(x, y, w, 10);
-                }
-            },
+            onDraw: (haps, time) =>
+                drawPianoroll({
+                    haps,
+                    time,
+                    ctx: drawContext,
+                    drawTime,
+                    fold: 0,
+                }),
             prebake: async () => {
                 const loadModules = evalScope(
                     import('@strudel/core'),
@@ -122,28 +101,30 @@ export default function Home({ controller }) {
                     import('@strudel/tonal'),
                     import('@strudel/webaudio'),
                 );
-                await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+                await Promise.all([
+                    loadModules,
+                    registerSynthSounds(),
+                    registerSoundfonts(),
+                ]);
             },
         });
+
         editorRef.current = globalEditor;
         window.globalEditor = globalEditor;
 
-        // show initial code
         apply(false);
 
         return () => {
-            window.removeEventListener('resize', sizeCanvas);
             editorRef.current?.stop();
             editorRef.current = null;
         };
-        globalEditor.setCode(songText);
-        
-    }, [songText]); // mount once
+    }, []); 
 
+ 
 
 useEffect(() => {
-  apply(isPlaying);
-}, [settings, isPlaying, selectedBeatId]);
+    apply(isPlaying);
+}, [settings, isPlaying, selectedBeatId, songText]);
 
     return (
         <main className="container pb-5">
@@ -193,6 +174,7 @@ useEffect(() => {
                                 mixName={currentBeat.name}
                             />
 
+                            <D3Graph />
                         </div>
                     </div>
 

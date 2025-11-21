@@ -1,10 +1,12 @@
 ﻿import './App.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Routes, Route, Link, useSearchParams } from 'react-router-dom';
 import Home from './components/Home';
 import Settings from './components/Setting';
 import { stranger_tune } from './tunes';
+import console_monkey_patch from './console-monkey-patch';
 const STORAGE_KEY = 'beatlab-settings-v1'; //local storage that remembers previous settings, if removed all will be back to default
+
 
 const defaultSettings = { // the defaultsettings when open the webpage. basically gives a starting point to the usestate
     bpm: 120,
@@ -15,7 +17,6 @@ const defaultSettings = { // the defaultsettings when open the webpage. basicall
 //app
 export default function App() {
     const [params, setParams] = useSearchParams(); // used for the routes that opens setting
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false); // boolean to track if the settings overlay is open
     const [isPlaying, setIsPlaying] = useState(false); // tracks if Strudel is currently playing (used to control UI state)
     const [songText, setSongText] = useState(stranger_tune); //run the strangertune
     const [settings, setSettings] = useState(() => {
@@ -27,7 +28,9 @@ export default function App() {
         }
     });
 
-
+    useEffect(() => {
+        console_monkey_patch();
+    }, []);
 
     // JSON helpers
     const saveSettings = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(settings)); //when pressed saving the setting is stored
@@ -53,7 +56,7 @@ export default function App() {
     const importSettings = (obj) => setSettings({ ...defaultSettings, ...obj });
 
     //to replace the bpm and vol placeholder
-    const preprocess = (t, s) => {
+    const applyPlaceholders = (t, s) => {
         let out = t;
      
         out = out.replaceAll('<BPM>', String(s.bpm));
@@ -66,7 +69,7 @@ export default function App() {
     //button actions
     //updates the Repl from the input text and the settings
     const handleProcess = () => {
-        const processed = preprocess(songText, settings);
+        const processed = applyPlaceholders(songText, settings);
         setSongText(processed);
         //this is used to sent newcode to repl
         window.globalEditor?.setCode?.(processed);
@@ -90,13 +93,11 @@ export default function App() {
         loadSettings,
         exportSettings,
         importSettings,
-        preprocess,
+        applyPlaceholders,
         handleProcess,
         handleProcPlay,
         handlePlay,
         handleStop,
-        isSettingsOpen,
-        setIsSettingsOpen,
         isPlaying,
         setIsPlaying,
    
@@ -133,7 +134,7 @@ export default function App() {
             </header>
 
             <Routes>
-            this is navigate to home and passes the controller
+            {/*this is navigate to home and passes the controller*/}
                 <Route path="/" element={<Home controller={controller} />} />
             </Routes>
 

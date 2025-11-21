@@ -24,7 +24,7 @@ export default function Settings({ controller, onClose }) {
     const setGirlPreset = () => update({ pitchSemitones: +4, backingType: settings.backingType || "girls" });
 
 
-    // --- button handlers that also set alert message ---
+    // button handlers that also set alert message
 
     const handleSave = () => {
         saveSettings();
