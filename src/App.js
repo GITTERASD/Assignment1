@@ -1,178 +1,156 @@
-import './App.css';
-import { useEffect, useRef, useState } from "react";
-import { StrudelMirror } from '@strudel/codemirror';
-import { evalScope } from '@strudel/core';
-import { drawPianoroll } from '@strudel/draw';
-import { initAudioOnFirstClick } from '@strudel/webaudio';
-import { transpiler } from '@strudel/transpiler';
-import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
-import { registerSoundfonts } from '@strudel/soundfonts';
+﻿import './App.css';
+import { useState,useEffect } from 'react';
+import { Routes, Route, Link, useSearchParams } from 'react-router-dom';
+import Home from './components/Home';
+import Settings from './components/Setting';
 import { stranger_tune } from './tunes';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
-import DjControls from "./components/Dj_Controls";
-import PlayButtons from "./components/PlayButtons";
-import PlayProButtons from "./components/PlayProButtons"
-import ProcessTextArea from "./components/ProcessTextArea";
+import console_monkey_patch from './console-monkey-patch';
+const STORAGE_KEY = 'beatlab-settings-v1'; //local storage that remembers previous settings, if removed all will be back to default
 
-let globalEditor = null;
 
-const handleD3Data = (event) => {
-    console.log(event.detail);
+const defaultSettings = { // the defaultsettings when open the webpage. basically gives a starting point to the usestate
+    bpm: 120,
+    volume: 0.8,
+    pitchSemitones: 0,
 };
 
-// we've got buttons here for me to click.process,proc,play and stop
-//export function SetupButtons() {
-    
-//    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//    document.getElementById('process').addEventListener('click', () => {
-//        Proc()
-//    }
-//    )
-//    document.getElementById('process_play').addEventListener('click', () => {
-//        if (globalEditor != null) {
-//            Proc()
-//            globalEditor.evaluate()
-//        }
-//    }
-//    )
-//}
+//app
+export default function App() {
+    const [params, setParams] = useSearchParams(); // used for the routes that opens setting
+    const [isPlaying, setIsPlaying] = useState(false); // tracks if Strudel is currently playing (used to control UI state)
+    const [songText, setSongText] = useState(stranger_tune); //run the strangertune
+    const [settings, setSettings] = useState(() => {
+        try { // used by home to pro&play and by settings to change slider,save/load json
+            const raw = localStorage.getItem(STORAGE_KEY); //raw gets the previous memory
+            return raw ? { ...defaultSettings, ...JSON.parse(raw) } : defaultSettings; // and than return it either new or default setting
+        } catch {
+            return defaultSettings;
+        }
+    });
 
-
-//export function ProcAndPlay() {
-//    if (globalEditor != null && globalEditor.repl.state.started == true) {
-//        console.log(globalEditor)
-//        Proc()
-//        globalEditor.evaluate();
-//    }
-//}
-
-//export function Proc() {
-
-//    let proc_text = document.getElementById('proc').value
-//    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//    ProcessText(proc_text);
-//    globalEditor.setCode(proc_text_replaced)
-//}
-
-//export function ProcessText(match, ...args) {
-
-//    let replace = ""
-//    if (document.getElementById('flexRadioDefault2').checked) {
-//        replace = "_"
-//    }
-
-//    return replace
-//}
-
-export default function StrudelDemo() {
-
-    //commented out all the javascript for some features and now doing the react way. Here is the react logic of doing play and stop.
-    //than pass to the bottom
-    const hasRun = useRef(false);
-    const preprocess = t => t.replaceAll('<p1_Radio>', '_');
-
-    const handleProcess = () => {
-        const p = preprocess(songText);
-        setSongText(p);
-        globalEditor.setCode(p);
-    };
-
-    const handleProcPlay = () => {
-        const p = preprocess(songText);
-        setSongText(p);
-        globalEditor.setCode(p);
-        globalEditor.evaluate();
-    };
-
-    const handlePlay = () => {
-        globalEditor.evaluate()
-    }
-
-    const handleStop = () => {
-        globalEditor.stop()
-    }
-
-
-
-    const [songText, setSongText] = useState(stranger_tune)
-    
-
-useEffect(() => {
-
-    if (!hasRun.current) {
-        document.addEventListener("d3Data", handleD3Data);
+    useEffect(() => {
         console_monkey_patch();
-        hasRun.current = true;
-        //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-            //init canvas
-            const canvas = document.getElementById('roll');
-            canvas.width = canvas.width * 2;
-            canvas.height = canvas.height * 2;
-            const drawContext = canvas.getContext('2d');
-            const drawTime = [-2, 2]; // time window of drawn haps
-            globalEditor = new StrudelMirror({
-                defaultOutput: webaudioOutput,
-                getTime: () => getAudioContext().currentTime,
-                transpiler,
-                root: document.getElementById('editor'),
-                drawTime,
-                onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
-                prebake: async () => {
-                    initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
-                    const loadModules = evalScope(
-                        import('@strudel/core'),
-                        import('@strudel/draw'),
-                        import('@strudel/mini'),
-                        import('@strudel/tonal'),
-                        import('@strudel/webaudio'),
-                    );
-                    await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-                },
-            });
-            
-        document.getElementById('proc').value = stranger_tune
-        //SetupButtons()
-        //Proc()
-    }
+    }, []);
+
+    // JSON helpers
+    const saveSettings = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(settings)); //when pressed saving the setting is stored
+    const loadSettings = () => {
+        try { //reads the saved setting and applies it
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) setSettings({ ...defaultSettings, ...JSON.parse(raw) }); //having 3 dots means getting the three objects from defaultSetting
+        } catch { }
+    };
+
+    //download
+    const exportSettings = () => {
+        const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'beatlab-settings.json';
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    //can open up a json file from local
+    const importSettings = (obj) => setSettings({ ...defaultSettings, ...obj });
+
+    //to replace the bpm and vol placeholder
+    const applyPlaceholders = (t, s) => {
+        let out = t;
+     
+        out = out.replaceAll('<BPM>', String(s.bpm));
+        out = out.replaceAll('<VOL>', String(s.volume));
+        return out; // <-- add return
+    }; 
 
 
-    globalEditor.setCode(songText)// This sets the Strudel editor content to the current songText state.
-}, [songText]);// (If [songText] were included in useEffect dependencies, this would rerun whenever songText changes.)
 
+    //button actions
+    //updates the Repl from the input text and the settings
+    const handleProcess = () => {
+        const processed = applyPlaceholders(songText, settings);
+        setSongText(processed);
+        //this is used to sent newcode to repl
+        window.globalEditor?.setCode?.(processed);
+    };
+    //having many ? just to make the error undefined instead of crashing
+    const handleProcPlay = () => {
+        handleProcess();
+        window.globalEditor?.evaluate?.();
+    };
 
-return (
-    <div>
-        <h2>Strudel Demo</h2>
-        <main>
+    const handlePlay = () => { window.globalEditor?.evaluate?.(); setIsPlaying(true); };//updates playing status to true when play
+    const handleStop = () => { window.globalEditor?.stop?.(); setIsPlaying(false); }; //make playing false when stop
 
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <ProcessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/> 
-                        {/* use a lambda where e is the input that takes new text (e.target.value) and updates the state variabl songText */}
-                    </div>
-                    <div className="col-md-4">
-                        <nav>
-                            <PlayProButtons onProcess={handleProcess} onProcPlay={handleProcPlay} />
-                            <br />
-                            {/*than pass to jsx of Play*/}
-                            <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                        </nav>
-                    </div>
+    //this is created prop for both setting and home to use it
+    const controller = {
+        songText,
+        setSongText,
+        settings,
+        setSettings,
+        saveSettings,
+        loadSettings,
+        exportSettings,
+        importSettings,
+        applyPlaceholders,
+        handleProcess,
+        handleProcPlay,
+        handlePlay,
+        handleStop,
+        isPlaying,
+        setIsPlaying,
+   
+    };
+
+    return (
+        <div className="min-h-screen bg-surface">
+            <header className="container py-4 d-flex align-items-center gap-3">
+
+              
+
+                <img //no image yet
+                    src=""
+
+                    alt="BeatLab"
+                    height={36}
+                    onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                    }}
+                />
+                <h1 className="m-0 brand-title">
+                    <span className="brand-main">BeatLab</span>
+                    <span className="brand-sub">Strudel</span>
+                </h1>
+                <div className="ms-auto">
+                    {/*useSearchParams manage the ?settings=open*/}
+                    <Link className="btn icon-btn rounded-circle d-flex align-items-center justify-content-center"
+                        to="?settings=open"
+                        aria-label="Settings"
+                        style={{ width: 52, height: 52, fontSize: 28 }}>
+                        ⚙
+                    </Link>
                 </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                    <DjControls/>
-                    </div>
-                </div>
-            </div>
-            <canvas id="roll"></canvas>
-        </main >
-    </div >
+            </header>
+
+            <Routes>
+            {/*this is navigate to home and passes the controller*/}
+                <Route path="/" element={<Home controller={controller} />} />
+            </Routes>
+
+           
+            {/*the settings will be open if the link is clicked and the onclose is true that remove the overlay*/}
+            {params.get('settings') === 'open' && (
+                      //overlay a small panel window if not it will just show on the default page
+                        <div className="overlay">
+                    <div className="overlay-card">
+                        {/*this navigate to setting only if the setting is open*/}
+                                    <Settings controller={controller}
+                                      onClose={() => setParams({}, { replace: true })}/>
+                                  </div>
+                            </div>
+                      )}
+
+        </div>
     );
-}
+} 

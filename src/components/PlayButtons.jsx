@@ -1,13 +1,30 @@
-
-function PlayButtons({onPlay,onStop }) {
+﻿export default function PlayButtons({ onPlay, onStop }) {
     return (
         <>
-            <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                <button id="play" className="btn btn-outline-primary" onClick={onPlay}>Play</button>
-                <button id="stop" className="btn btn-outline-danger" onClick={onStop}>Stop</button>
+
+            <div className="pad-wrapper">
+                <button
+                    className="pad pad-play"
+                    onClick={onPlay}
+                    aria-label="Play"
+                    title="Play"
+                >
+                    ▶
+                </button>
+                <div className="pad-label">Play</div>
+            </div>
+
+            <div className="pad-wrapper">
+                <button
+                    className="pad pad-stop"
+                    onClick={onStop}
+                    aria-label="Stop"
+                    title="Stop"
+                >
+                    ■
+                </button>
+                <div className="pad-label">Stop</div>
             </div>
         </>
     );
 }
-
-export default PlayButtons

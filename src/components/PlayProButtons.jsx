@@ -1,12 +1,28 @@
-
-function PlayProButtons({ onProcess, onProcPlay }) {
-    return (<>
-        <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button id="process" className="btn btn-outline-primary" onClick={onProcess}>Preprocess</button>
-            <button id="process_play" className="btn btn-outline-primary" onClick={onProcPlay}>Proc & Play</button>
-      </div>
-  </>
-  );
+﻿export default function PlayProButtons({ onProcess, onProcPlay }) {
+    return (
+        <>
+            <div className="pad-wrapper">
+                <button
+                    className="pad pad-preprocess"
+                    onClick={onProcess}
+                    aria-label="Preprocess code"
+                    title="Preprocess"
+                >
+                    ⟳
+                </button>
+                <div className="pad-label">Preprocess</div>
+            </div>
+            <div className="pad-wrapper">
+                <button
+                    className="pad pad-procplay"
+                    onClick={onProcPlay}
+                    aria-label="Process and play"
+                    title="Proc & Play"
+                >
+                    ⟳▶
+                </button>
+                <div className="pad-label">Proc &amp; Play</div>
+            </div>
+        </>
+    );
 }
-
-export default PlayProButtons;
