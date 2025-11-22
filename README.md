@@ -1,70 +1,103 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Controls
 
-In the project directory, you can run:
+ **Composer text area**
+  - This is the Strudel tune code for the song. This is the text that gets preprocessed and edited.
 
-### `npm start`
+ **Preprocess**
+  - Updates the studel code.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+ **Proc & Play**
+  - Preprocesses the code and immediately starts play with the current settings.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+ **Play**
+  - Plays the current code in the Strudel editor again without changing any settings.
 
-### `npm test`
+ **Stop**
+  - Stops play.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ **Instrument mix (radio buttons)**
+  - Four options of instruments.
+  - Each option adds a different extra drum or chord layer on the bottom of the tune.
 
-### `npm run build`
+ **Deck Info**
+  - Displays the current BPM, pitch, volume and selected mix intruments in real-time.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ **Settings**
+  - Opens the overlay with all main controls.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+ **BPM input**
+  - Number field for song speed. Used to calculate Strudel setcps.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ **Master Volume slider**
+  - Controls overall loudness of the song.
 
-### `npm run eject`
+ **Pitch (semitones) slider**
+  - Shifts pitch up or down in semitones.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ **Boy pitch / Girl pitch buttons**
+  - Quick presets that set the pitch slider to lower / higher values.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ **Save**
+  - Saves the current settings (BPM, volume, pitch) into localStorage like the storage key v1.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+ **Load**
+  - Restores settings from localStorage that has been saved.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+ **Export**
+   - Downloads the current settings as a JSON file.
 
-## Learn More
+ **Import**
+  - Loads settings from a JSON file and applies them.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+ **Live D3 graph**
+  - Shows the recent gain values of the audio as a moving line while the song plays.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Usage Guidelines
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Composer vs editor**
+  - Edit the tune in the Composer text area.
+  - Preprocess and Proc & Play regenerate the playback code in the Strudel editor.  
+  - Manual edits in the editor will be updated immediately in the composer.
 
-### Analyzing the Bundle Size
+**BPM**
+  - Very low BPM values may make it sound like the song has almost stopped. 
+  - Very high BPM can sound clipped.  
+  - Max Bpm is 200 and Min Bpm is 40
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Pitch (semitones)**
+  - Use **Boy pitch** and **Girl pitch** buttons to quickly jump to sensible presets. (+4,-4)
+  - Boy is more deep so the pitch will be lower which is -4 and girl is higher so thats +4
+  - A code will appear under the composer and when the raw pitch changes, the speed of the code will change as well.
+  
 
-### Making a Progressive Web App
+**Volume**
+  - Volume below **0.1** may be hard to hear.  
+  - Volume near **1.0** can be very loud.  
+  - The D3 graph will show higher spikes when the volume is higher.
+  - code All gain will show at the bottom of the strudel code just like pitch and intrument mix works 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Deck Info**
+  - Deck Info is read-only. It shows the *current* BPM, pitch, volume and selected mix.  
+  - If you are not happy with the DeckInfo you can simply change it.
 
-### Advanced Configuration
+**Settings Overlay Panel**
+  - You can see a gear icon that represents the settings
+  - This is a overlay interface on the home page.
+  - It Synchronously updates the bpm,pitch and volume while the music is playing.
+  - The json handling is also involved in the setting panel 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**JSON handling**
+  - Save pressed successfully will show message.
+  - Load will load the previously saved version.
+  - Exort will download current version.
+  - Import expects a JSON object with keys like bpm, volume, pitchSemitones.  
+  - All Invalid JSON will show an error message.
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ **D3 graph**
+  - The graph only animates while the tune is playing and logging events.
+  - The graph is simple with minimal styling and the size not fully responsive.
+  - The line mainly changes when the volume changes, because i only plot the logged gain values in the d3 ui piece.

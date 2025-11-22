@@ -17,16 +17,18 @@ import D3Graph from './D3Graph';
 function buildPlaybackCode(text, song, comboBeat) {
     // 1) force BPM at the very top
     let out = `setcps(${song.bpm}/60/4)\n` + text;
-    const raw = song.pitchSemitones ?? 0; // use the pitchSemitones if not working than use 0
+    const raw = song.pitchSemitones ?? 0; // use the pitchSemitones if not working than use 0, raw is the slide value
     const semis = Math.round(Math.sign(raw) * Math.pow(Math.abs(raw) / 5, 1.25) * 12); //formula to create pitch
     const rate = Number((2 ** (semis / 12)).toFixed(4));
 
     //build two strudel command that runs everyround
+    //serves for volume and pitch
     const master = `
 all(x => x.gain(${song.volume}))
 all(x => x.speed(${rate})) 
 `;
 
+//this is block of math for the intrument mix to be in tunes.
     if (comboBeat && comboBeat.trim().length > 0) {
         out += `\n\n${comboBeat}\n`;
     }
@@ -36,7 +38,7 @@ all(x => x.speed(${rate}))
 }
 
 export default function Home({ controller }) {
-    const { songText, setSongText, settings, isPlaying} = controller; //read from app.js controller
+    const { songText, setSongText, settings, isPlaying} = controller; //read from app.js controller prop
     //refs used to acces DOM elements
     const [selectedBeatId, setSelectedBeatId] = useState('original');
     const editorHostRef = useRef(null);
