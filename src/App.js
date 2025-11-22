@@ -83,7 +83,7 @@ export default function App() {
     const handlePlay = () => { window.globalEditor?.evaluate?.(); setIsPlaying(true); };//updates playing status to true when play
     const handleStop = () => { window.globalEditor?.stop?.(); setIsPlaying(false); }; //make playing false when stop
 
-    //this is created for both setting and home to use it
+    //this is created prop for both setting and home to use it
     const controller = {
         songText,
         setSongText,

@@ -1,5 +1,5 @@
 import React from "react";
-
+//UI piece of the instrument mix
 export default function BeatSelector({ beats, selectedId, onChange }) {
     return (
         <section className="mt-3">

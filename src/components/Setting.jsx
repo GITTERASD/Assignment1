@@ -12,7 +12,7 @@ import StorageButtons from "./StorageButtons";
 //patch is the newly updated piece of data
 export default function Settings({ controller, onClose }) {
     const { settings, setSettings, saveSettings, loadSettings, exportSettings, importSettings } = controller; //from app
-    const update = (patch) => setSettings(s => ({ ...s, ...patch })); // update() merges small changes (patches) into the settings object
+    const update = (patch) => setSettings(s => ({ ...s, ...patch })); // update() merges small changes (patches) into the settings object, basically updates the default settings.
     // message shown in the Bootstrap alert
     // { type: "success" | "danger" | "info", text: string }
     const [message, setMessage] = useState(null);
